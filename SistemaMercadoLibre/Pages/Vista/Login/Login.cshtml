@@ -1,0 +1,41 @@
+﻿@page "/"
+@model SistemaMercadoLibre.Pages.Vista.Login.LoginModel
+@{
+    Layout = "";    
+}
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <link rel="stylesheet" href="~/css/login.component.css" asp-append-version="true" />
+</head>
+<body>
+    <form id="form1" method="post">
+        <div class="inputGroup inputGroup1" style="text-align: center">
+          <label>MAESTRÍA EN INGENIERÍA INFORMÁTICA</label>
+          <label>SISTEMA MERCADO LIBRE</label>     
+        </div>
+        <div class="svgContainer">
+          <div>
+            <img src="~/assets/unp2.jpg" width="220" >
+          </div>
+        </div>
+  
+        <div class="inputGroup inputGroup1">
+          <label for="email">Usuario</label>
+          <input type="text" id="email" name="email" class="email" maxlength="256"  runat="server" />
+          <span class="indicator"></span>
+        </div>
+        <div class="inputGroup inputGroup2">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" name="password" class="password"  minlength="8" maxlength="16"  runat="server"
+          />
+        </div>
+        <div class="form-group row abs-center" style="display: flex;align-items: center;justify-content: center; ">
+            <button type="submit" id="btnIniciar" class="buttonLogin" >Iniciar Sesión</button>
+       </div>
+  </form>
+</body>
+</html>
