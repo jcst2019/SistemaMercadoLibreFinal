@@ -47,19 +47,5 @@ namespace SistemaMercadoLibre.Pages.Controlador
             }
             return lista;
         }
-        public static String MostrarEstadoActivo(bool estado) {
-            String cadena;
-
-            if (estado)
-            {
-                cadena = "<span class='badge bg-success'>Activo</span>";
-            }
-            else
-            {
-                cadena = "<span class='badge bg-danger'>De Baja</span>";
-            }
-            return cadena;
-            
-        }
     }
 }
