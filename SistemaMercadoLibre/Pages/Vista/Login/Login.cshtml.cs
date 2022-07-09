@@ -14,6 +14,7 @@ namespace SistemaMercadoLibre.Pages.Vista.Login
             Console.WriteLine(email);
             Console.WriteLine(password);
 
+
             return RedirectToPage("/Vista/Inicio/Inicio");
 
         }

@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-     <link rel="stylesheet" href="~/lib/site/Site.css" />
-   
+    <link rel="stylesheet" href="~/lib/site/Site.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
     
 </head>
 <body class="sb-nav-fixed">
@@ -50,7 +51,7 @@
                             Usuarios
                         </a>
                         <div class="sb-sidenav-menu-heading">Mantenimiento</div>
-                        <a class="nav-link" href="@Url.Action("Categoria","Categoria")">
+                        <a class="nav-link"  asp-page="/Vista/Categoria/VistaCategoria">
                             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                             Categoria
                         </a>
@@ -90,8 +91,10 @@
  <script src="~/js/scripts.js"></script>
  <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
  <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+ <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
  <script src="~/js/site.js" asp-append-version="true"></script>
  <script src="~/lib/font-awesome/js/all.js" asp-append-version="true"></script>
+
  @await RenderSectionAsync("Scripts", required: false)
 
 </body>
