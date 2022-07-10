@@ -2,29 +2,29 @@
 {
     public class Categoria
     {
-        private int id;
+        private String id;
         private String nombre;
         private String descripcion;
-        private bool activo;
+        private String estado;
 
         public Categoria()
         {
 
         }
-        public Categoria(int id, String nombre, String descripcion, bool activo)
+        public Categoria(String id, String nombre, String descripcion, String estado)
         {
             this.id = id;
             this.nombre = nombre;
             this.descripcion = descripcion;
-            this.activo = activo;
+            this.estado = estado;
         }
 
-        public int getId()
+        public String getId()
         {
             return id;
         }
 
-        public void setId(int id)
+        public void setId(String id)
         {
             this.id = id;
         }
@@ -49,14 +49,14 @@
             this.descripcion = descripcion;
         }
 
-        public bool getActivo()
+        public String getEstado()
         {
-            return activo;
+            return estado;
         }
 
-        public void setActivo(bool activo)
+        public void setEstado(String estado)
         {
-            this.activo = activo;
+            this.estado = estado;
         }
 
     }

@@ -9,6 +9,7 @@
     lista = GestionCategoria.Listar();
     Console.WriteLine("Lista");
     Console.WriteLine(lista);
+
 }
 <br />
 <h2>Categoria</h2>
@@ -34,7 +35,6 @@
                 <tr>
                     <th>ID</th>
                     <th>Descripción</th>
-                    <th class="ocultar">EstadoOcultado</th>
                     <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
@@ -46,9 +46,9 @@
                     <tr>
                         <td>@categoria.getId()</td>
                         <td>@categoria.getDescripcion()</td>
-                        <td  class="ocultar" >@categoria.getActivo()</td>
+                        <!--<td  class="ocultar" >@categoria.getEstado()</td>-->
                         <td>
-                            @if (@categoria.getActivo())
+                            @if (@categoria.getEstado() == "Activo")
                             {
                                 <span class='badge bg-success'>Activo</span>
                             }
@@ -105,7 +105,7 @@
 @section scripts{
     <script>
     $(document).ready(function(){
-            $(".ocultar").hide();
+            //$(".ocultar").hide();
     });
 
     var tablaData = $("#tablaCategoria").DataTable({
@@ -127,7 +127,7 @@
                 $('#txtID').val(json[0]);
                 $('#txtDescripcion').val(json[1]);
                 $('#cboActivo').prop('disabled',false);//Si Estaba Desactivado.
-                $('#cboActivo').val(json[2] == 'True' ? 1 : 0);
+                $('#cboActivo').val(json[2].search("Activo") != -1 ? 1 : 0);
             } else {
                 $('#txtID').val("");
                 $('#txtDescripcion').val("");

@@ -24,9 +24,9 @@ namespace SistemaMercadoLibre.Pages.Controlador
                 while (dr.Read())
                 {
                     Categoria cat = new Categoria();
-                    cat.setId((int)dr["IdCategoria"]);  //Comentario es la columna del la base de datos
+                    cat.setId(dr["IdCategoria"].ToString());  //Comentario es la columna del la base de datos
                     cat.setDescripcion(dr["Descripcion"].ToString());
-                    cat.setActivo(Convert.ToBoolean(dr["Activo"]));
+                    cat.setEstado(dr["desEstado"].ToString());
 
                     lista.Add(cat);
                 }
