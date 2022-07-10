@@ -9,8 +9,31 @@ namespace SistemaMercadoLibre.Pages.Controlador
     {
         public static List<Categoria> Listar()
         {
+            SqlConnection coon = GestionDatos.conectar();
+            SqlCommand cmd;
 
             List<Categoria> lista = new List<Categoria>();
+
+            String cadena = "spCategoriasListarAll";
+            try
+            {
+                cmd = coon.CreateCommand();
+                cmd.CommandText = cadena;
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    Categoria cat = new Categoria();
+                    cat.setId((int)dr["IdCategoria"]);  //Comentario es la columna del la base de datos
+                    cat.setDescripcion(dr["Descripcion"].ToString());
+                    cat.setActivo(Convert.ToBoolean(dr["Activo"]));
+
+                    lista.Add(cat);
+                }
+                coon.Close();
+                return lista;
+            }
+            /*
             try
             {
                 using (SqlConnection oconexion = GestionDatos.conectar())
@@ -39,11 +62,11 @@ namespace SistemaMercadoLibre.Pages.Controlador
                     oconexion.Close();
 
                 }
-            }
+            }*/
             catch
             {
                 lista = new List<Categoria>();
-              
+
             }
             return lista;
         }
