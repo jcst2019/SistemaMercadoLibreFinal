@@ -25,7 +25,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-12">
-                <button type="button" class="btn btn-primary" onclick="abrirModal()">Crear Categoría</button>
+                <button type="button" class="btn btn-primary" onclick="abrirModal(null)">Crear Categoría</button>
             </div>
         </div>
         <hr />
@@ -34,6 +34,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Descripción</th>
+                    <th class="ocultar">EstadoOcultado</th>
                     <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
@@ -45,6 +46,7 @@
                     <tr>
                         <td>@categoria.getId()</td>
                         <td>@categoria.getDescripcion()</td>
+                        <td  class="ocultar" >@categoria.getActivo()</td>
                         <td>
                             @if (@categoria.getActivo())
                             {
@@ -54,7 +56,7 @@
                                 <span class='badge bg-danger'>De Baja</span>
                              }                                                        
                         </td>
-                        <td><button type="button" class="btn btn-primary"><i class="fas fa-pen me-1"></i></button>
+                        <td><button type="button" class="btn btn-primary btn-editar"><i class="fas fa-pen me-1"></i></button>
                             <button type="button" class="btn btn-danger ms-2"><i class="fas fa-trash me-1"></i></button>
                         </td>
                     </tr>
@@ -75,6 +77,12 @@
             </div>
             <div class="modal-body">
                 <div class="mb-1">
+                    <label for="exampleFormControlInput1" class="form-label">ID</label>
+                    <input type="text" class="form-control" id="txtID" disabled="true">
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="mb-1">
                     <label for="exampleFormControlInput1" class="form-label">Descripción</label>
                     <input type="text" class="form-control" id="txtDescripcion" placeholder="Escribir Descripción">
                 </div>
@@ -82,8 +90,8 @@
             <div class="modal-body">
                 <label for="exampleFormControlInput1" class="form-label">Estado</label>
                 <select id="cboActivo" class="form-select">
-                    <option selected>Activo</option>
-                    <option value="1">De Baja</option>
+                    <option value="1" selected >Activo</option>
+                    <option value="0">De Baja</option>
                 </select>
             </div>
             <div class="modal-footer">
@@ -96,6 +104,10 @@
 
 @section scripts{
     <script>
+    $(document).ready(function(){
+            $(".ocultar").hide();
+    });
+
     var tablaData = $("#tablaCategoria").DataTable({
             responsive: true,
             ordering: false,
@@ -109,11 +121,30 @@
             ]
         });
 
-        function abrirModal() {
+        function abrirModal(json) {
+
+            if (json != null) {
+                $('#txtID').val(json[0]);
+                $('#txtDescripcion').val(json[1]);
+                $('#cboActivo').prop('disabled',false);//Si Estaba Desactivado.
+                $('#cboActivo').val(json[2] == 'True' ? 1 : 0);
+            } else {
+                $('#txtID').val("");
+                $('#txtDescripcion').val("");
+                $('#cboActivo').prop('disabled',true);
+            }
 
             $("#FrmModalCategoria").modal("show");
 
         }
+        $("#tablaCategoria tbody").on("click",'.btn-editar',function(){
+	       
+            var filaSeleccionada = $(this).closest("tr");
+            console.log(tablaData.row(filaSeleccionada).data());
+            var data = tablaData.row(filaSeleccionada).data();
+            abrirModal(data);
+            //alert(filaSeleccionada);
+        })
 
     </script>
 
