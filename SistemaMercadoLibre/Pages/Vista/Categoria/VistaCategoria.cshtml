@@ -10,6 +10,14 @@
     Console.WriteLine("Lista");
     Console.WriteLine(lista);
 
+    if (Request.Method == "POST")
+    {
+        Categoria categoria = new Categoria();
+        categoria.setDescripcion(Request.Form["txtDescripcion"].ToString());
+        String idNewCategoria = GestionCategoria.InsertarCategoria(categoria);
+        lista = GestionCategoria.Listar();
+    }
+
 }
 <br />
 <h2>Categoria</h2>
@@ -68,39 +76,41 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="FrmModalCategoria" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-dark text-white">
-                <h5 class="modal-title" id="exampleModalLabel">Categoría</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-1">
-                    <label for="exampleFormControlInput1" class="form-label">ID</label>
-                    <input type="text" class="form-control" id="txtID" disabled="true">
+<form method="post">
+    <div class="modal fade" id="FrmModalCategoria" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title" id="exampleModalLabel">Categoría</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            </div>
-            <div class="modal-body">
-                <div class="mb-1">
-                    <label for="exampleFormControlInput1" class="form-label">Descripción</label>
-                    <input type="text" class="form-control" id="txtDescripcion" placeholder="Escribir Descripción">
+                <div class="modal-body">
+                    <div class="mb-1">
+                        <label for="exampleFormControlInput1" class="form-label">ID</label>
+                        <input type="text" class="form-control" id="txtID" disabled="true">
+                    </div>
                 </div>
-            </div>
-            <div class="modal-body">
-                <label for="exampleFormControlInput1" class="form-label">Estado</label>
-                <select id="cboActivo" class="form-select">
-                    <option value="1" selected >Activo</option>
-                    <option value="0">De Baja</option>
-                </select>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+                <div class="modal-body">
+                    <div class="mb-1">
+                        <label for="exampleFormControlInput1" class="form-label">Descripción</label>
+                        <input type="text" class="form-control" id="txtDescripcion" name="txtDescripcion" placeholder="Escribir Descripción">
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <label for="exampleFormControlInput1" class="form-label">Estado</label>
+                    <select id="cboActivo" class="form-select">
+                        <option value="1" selected >Activo</option>
+                        <option value="0">De Baja</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</form>
 
 @section scripts{
     <script>

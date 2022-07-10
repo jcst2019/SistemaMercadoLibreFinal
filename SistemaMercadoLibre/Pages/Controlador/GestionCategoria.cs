@@ -70,5 +70,34 @@ namespace SistemaMercadoLibre.Pages.Controlador
             }
             return lista;
         }
+        public static String InsertarCategoria(Categoria categoria)
+        {
+            String cadena = "spInsertCategoria";
+
+            SqlConnection coon = GestionDatos.conectar();
+            SqlCommand cmd;
+
+            try
+            {
+
+                cmd = coon.CreateCommand();
+                cmd.CommandText = cadena;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@descripcion", categoria.getDescripcion()));
+                cmd.Parameters.Add("@IdCadena", SqlDbType.Char, 5).Direction = ParameterDirection.Output;
+
+                cmd.ExecuteNonQuery();
+
+                string ICategoria = cmd.Parameters["@IdCadena"].Value.ToString();
+
+                return ICategoria;
+
+            }
+            catch (SqlException err)
+            {
+                return "Error :" + err.Message;
+
+            }
+        }
     }
 }
