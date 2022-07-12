@@ -99,5 +99,32 @@ namespace SistemaMercadoLibre.Pages.Controlador
 
             }
         }
+        public static String ActualizarCategoria(Categoria categoria)
+        {
+            String cadena = "spUpadteCategoria";
+
+            SqlConnection coon = GestionDatos.conectar();
+            SqlCommand cmd;
+
+            try
+            {
+
+                cmd = coon.CreateCommand();
+                cmd.CommandText = cadena;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@idCategoria", categoria.getId().ToString()));
+                cmd.Parameters.Add(new SqlParameter("@descripcion", categoria.getDescripcion().ToString()));
+                cmd.Parameters.Add(new SqlParameter("@estado", categoria.getEstado()));
+                cmd.ExecuteNonQuery();
+
+                return "Datos se modificaron exitosamente!";
+
+            }
+            catch (SqlException err)
+            {
+                return "Error :" + err.Message;
+
+            }
+        }
     }
 }

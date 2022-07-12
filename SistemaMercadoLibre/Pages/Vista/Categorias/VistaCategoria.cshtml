@@ -5,18 +5,19 @@
 @model SistemaMercadoLibre.Pages.Vista.VistaCategoria.CategoriaModel
 @{
 
-    List<Categoria> lista = new List<Categoria>();
-    lista = GestionCategoria.Listar();
-    Console.WriteLine("Lista");
-    Console.WriteLine(lista);
-
+    //List<Categoria> lista = new List<Categoria>();
+    //lista = GestionCategoria.Listar();
+    //Console.WriteLine("Lista");
+    //Console.WriteLine(lista);
+/*
     if (Request.Method == "POST")
     {
         Categoria categoria = new Categoria();
         categoria.setDescripcion(Request.Form["txtDescripcion"].ToString());
         String idNewCategoria = GestionCategoria.InsertarCategoria(categoria);
-        lista = GestionCategoria.Listar();
+        //lista = GestionCategoria.Listar();
     }
+    */
 
 }
 <br />
@@ -49,7 +50,7 @@
             </thead>
             <tbody>
 
-                @foreach(var categoria in lista)
+                @foreach(var categoria in Model.lista)
                 {
                     <tr>
                         <td>@categoria.getId()</td>
@@ -65,7 +66,7 @@
                              }                                                        
                         </td>
                         <td><button type="button" class="btn btn-primary btn-editar"><i class="fas fa-pen me-1"></i></button>
-                            <button type="button" class="btn btn-danger ms-2"><i class="fas fa-trash me-1"></i></button>
+                            <button type="button" class="btn btn-danger ms-2 btn-baja"><i class="fas fa-trash me-1"></i></button>
                         </td>
                     </tr>
                     
@@ -75,19 +76,19 @@
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal Registrar y Modificar -->
 <form method="post">
     <div class="modal fade" id="FrmModalCategoria" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header bg-dark text-white">
-                    <h5 class="modal-title" id="exampleModalLabel">Categoría</h5>
+                <div class="modal-header bg-sistema text-black">
+                    <h5 class="breadcrumb-item" id="lblCategoria" name="lblCategoria">Categoría</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-1">
                         <label for="exampleFormControlInput1" class="form-label">ID</label>
-                        <input type="text" class="form-control" id="txtID" disabled="true">
+                        <input type="text" class="form-control" id="txtID" name="txtID" readonly="readonly" >
                     </div>
                 </div>
                 <div class="modal-body">
@@ -98,14 +99,51 @@
                 </div>
                 <div class="modal-body">
                     <label for="exampleFormControlInput1" class="form-label">Estado</label>
-                    <select id="cboActivo" class="form-select">
+                    <select id="cboActivo" name="cboActivo" class="form-select">
                         <option value="1" selected >Activo</option>
                         <option value="0">De Baja</option>
                     </select>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+                    <button type="submit" class="btn btn-primary" onclick="Guardar()" asp-page-handler="Guardar">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- Modal Eliminar -->
+<form method="post">
+    <div class="modal fade" id="FrmModalCategoriaBaja" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-sistema text-black">
+                    <h5 class="breadcrumb-item" id="exampleModalLabel">BAJA DE CATEGORÍA</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-1">
+                        <label for="exampleFormControlInput1" class="form-label">ID</label>
+                        <input type="text" class="form-control" id="txtIdBaja" name="txtIdBaja" readonly="readonly" >
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-1">
+                        <label for="exampleFormControlInput1" class="form-label">Descripción</label>
+                        <input type="text" class="form-control" id="txtDescripcionBaja" name="txtDescripcionBaja" placeholder="Escribir Descripción">
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <label for="exampleFormControlInput1" class="form-label">Estado</label>
+                    <select id="cboActivoBaja" name="cboActivoBaja" class="form-select">
+                        <option value="1" selected >Activo</option>
+                        <option value="0">De Baja</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" onclick="Guardar()" asp-page-handler="Baja">BAJA</button>
                 </div>
             </div>
         </div>
@@ -134,17 +172,37 @@
         function abrirModal(json) {
 
             if (json != null) {
+                $('#lblCategoria').text("EDITAR CATEGORÍA");
+                $('#txtID').prop('readonly',true);
+                $('#txtDescripcion').prop('readonly',false);//Si Estaba Desactivado. Lo activo
+                $('#cboActivo').prop('disabled',false);//Si Estaba Desactivado. Lo activo
                 $('#txtID').val(json[0]);
-                $('#txtDescripcion').val(json[1]);
-                $('#cboActivo').prop('disabled',false);//Si Estaba Desactivado.
+                $('#txtDescripcion').val(json[1]);              
                 $('#cboActivo').val(json[2].search("Activo") != -1 ? 1 : 0);
             } else {
+                $('#lblCategoria').text("REGISTRAR CATEGORÍA");
                 $('#txtID').val("");
                 $('#txtDescripcion').val("");
+                $('#txtID').prop('readonly',true);
                 $('#cboActivo').prop('disabled',true);
             }
 
             $("#FrmModalCategoria").modal("show");
+
+        }
+        
+        function abrirModalBaja(json) {
+
+            if (json != null) {
+                $('#txtIdBaja').val(json[0]);
+                $('#txtIdBaja').prop('readonly',true);
+                $('#txtDescripcionBaja').val(json[1]);
+                $('#txtDescripcionBaja').prop('readonly',true);
+                $('#cboActivoBaja').val(json[2].search("Activo") != -1 ? 1 : 0);
+                $('#cboActivoBaja').prop('disabled',true);
+            } 
+
+            $("#FrmModalCategoriaBaja").modal("show");
 
         }
         $("#tablaCategoria tbody").on("click",'.btn-editar',function(){
@@ -153,6 +211,15 @@
             console.log(tablaData.row(filaSeleccionada).data());
             var data = tablaData.row(filaSeleccionada).data();
             abrirModal(data);
+            //alert(filaSeleccionada);
+        })
+
+        $("#tablaCategoria tbody").on("click",'.btn-baja',function(){
+	       
+            var filaSeleccionada = $(this).closest("tr");
+            console.log(tablaData.row(filaSeleccionada).data());
+            var data = tablaData.row(filaSeleccionada).data();
+            abrirModalBaja(data);
             //alert(filaSeleccionada);
         })
 

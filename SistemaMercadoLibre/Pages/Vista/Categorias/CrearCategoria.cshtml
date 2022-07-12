@@ -1,0 +1,30 @@
+﻿@page
+@model SistemaMercadoLibre.Pages.Vista.Categorias.CrearCategoriaModel
+@{
+}
+<br>
+<h2> Nueva Categoría</h2>
+
+if(Model.errorMessage.Length > 0){
+
+}
+
+<form method="POST">
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Descripción</label>
+        <div class="col-sm-6">
+           <input type="text" class="form-control" id="txtDescripcion" name="txtDescripcion" placeholder="Escribir Descripción">
+        </div>
+    </div>
+     <div class="row mb-3">
+         <label for="exampleFormControlInput1" class="form-label">Estado</label>
+          <select id="cboActivo" class="form-select">
+                  <option value="1" selected >Activo</option>
+                  <option value="0">De Baja</option>
+          </select>
+    </div>
+    <div class="row mb-3">
+       <button type="button" class="btn btn-secondary" href="/">Cancelar</button>
+       <button type="submit" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+    </div>
+</form>

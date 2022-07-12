@@ -1119,11 +1119,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\JCST\\maestria\\cursos\\CalidadSoftware\\proyectoFinal_ultimo\\SistemaMercadoLibre\\SistemaMercadoLibre\\SistemaMercadoLibre.csproj",
+      "projectUniqueName": "D:\\JCST\\maestria\\cursos\\CalidadSoftware\\prueba\\SistemaMercadoLibreFinal\\SistemaMercadoLibre\\SistemaMercadoLibre.csproj",
       "projectName": "SistemaMercadoLibre",
-      "projectPath": "D:\\JCST\\maestria\\cursos\\CalidadSoftware\\proyectoFinal_ultimo\\SistemaMercadoLibre\\SistemaMercadoLibre\\SistemaMercadoLibre.csproj",
+      "projectPath": "D:\\JCST\\maestria\\cursos\\CalidadSoftware\\prueba\\SistemaMercadoLibreFinal\\SistemaMercadoLibre\\SistemaMercadoLibre.csproj",
       "packagesPath": "C:\\Users\\Juan Carlos\\.nuget\\packages\\",
-      "outputPath": "D:\\JCST\\maestria\\cursos\\CalidadSoftware\\proyectoFinal_ultimo\\SistemaMercadoLibre\\SistemaMercadoLibre\\obj\\",
+      "outputPath": "D:\\JCST\\maestria\\cursos\\CalidadSoftware\\prueba\\SistemaMercadoLibreFinal\\SistemaMercadoLibre\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Juan Carlos\\AppData\\Roaming\\NuGet\\NuGet.Config",
