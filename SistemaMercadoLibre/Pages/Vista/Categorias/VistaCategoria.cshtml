@@ -20,11 +20,27 @@
     */
 
 }
+@if (Model.errorMessage.Length > 0)
+ {
+    <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+          <strong>@Model.errorMessage</strong>
+          <button type='button' class='btn-close' data-bs-dismiss='alert' arial-label='Close'></button>
+    </div>
+
+}
+@if (Model.successMessage.Length > 0)
+ {
+    <div class='alert alert-success alert-dismissible fade show' role='alert'>
+          <strong>@Model.successMessage</strong>
+          <button type='button' class='btn-close' data-bs-dismiss='alert' arial-label='Close'></button>
+    </div>
+
+}
 <br />
 <h2>Categoria</h2>
 
 <ol class="breadcrumb mb-4 mt-4">
-    <li class="breadcrumb-item"><a href="index.html">Resumen</a></li>
+    <li class="breadcrumb-item"><a href="index.html">Mantenimiento</a></li>
     <li class="breadcrumb-item active">Categoria</li>
 </ol>
 
