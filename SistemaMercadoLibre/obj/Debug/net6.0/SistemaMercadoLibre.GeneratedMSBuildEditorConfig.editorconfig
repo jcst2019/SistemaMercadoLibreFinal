@@ -39,12 +39,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzdGFcQ2F0ZWdvcmlhc1xWaXN0YUNhdGVnb3JpYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/JCST/maestria/cursos/CalidadSoftware/prueba/SistemaMercadoLibreFinal/SistemaMercadoLibre/Pages/Vista/Guias/DescargarGuias.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzdGFcR3VpYXNcRGVzY2FyZ2FyR3VpYXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/JCST/maestria/cursos/CalidadSoftware/prueba/SistemaMercadoLibreFinal/SistemaMercadoLibre/Pages/Vista/Inicio/Inicio.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzdGFcSW5pY2lvXEluaWNpby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/JCST/maestria/cursos/CalidadSoftware/prueba/SistemaMercadoLibreFinal/SistemaMercadoLibre/Pages/Vista/Login/Login.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzdGFcTG9naW5cTG9naW4uY3NodG1s
+[D:/JCST/maestria/cursos/CalidadSoftware/prueba/SistemaMercadoLibreFinal/SistemaMercadoLibre/Pages/Vista/Login/VistaLogin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzdGFcTG9naW5cVmlzdGFMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/JCST/maestria/cursos/CalidadSoftware/prueba/SistemaMercadoLibreFinal/SistemaMercadoLibre/Pages/_ViewImports.cshtml]

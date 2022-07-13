@@ -19,10 +19,14 @@ namespace SistemaMercadoLibre.Pages.Vista.VistaCategoria
 
         public void OnPostGuardar()
         {
+
             Categoria categoria = new Categoria();
             categoria.setId(Request.Form["txtID"].ToString());
             categoria.setDescripcion(Request.Form["txtDescripcion"].ToString());
             categoria.setEstado(Request.Form["cboActivo"].ToString());
+            categoria.setUsuarioRegistro(HttpContext.Session.GetString("ID_USUARIO"));
+            //categoria.setUsuarioRegistro("123456");
+
             if (categoria.getDescripcion().Length == 0)
             {
                 lista = GestionCategoria.Listar();

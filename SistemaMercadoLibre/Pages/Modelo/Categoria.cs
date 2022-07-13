@@ -3,20 +3,22 @@
     public class Categoria
     {
         private String id;
-        private String nombre;
         private String descripcion;
         private String estado;
+        private String usuarioRegistro;
+        private String fechaRegistro;
 
         public Categoria()
         {
 
         }
-        public Categoria(String id, String nombre, String descripcion, String estado)
+        public Categoria(String id, String descripcion, String estado, String usuarioRegistro, String fechaRegistro)
         {
             this.id = id;
-            this.nombre = nombre;
             this.descripcion = descripcion;
             this.estado = estado;
+            this.usuarioRegistro = usuarioRegistro;
+            this.fechaRegistro = fechaRegistro;
         }
 
         public String getId()
@@ -27,16 +29,6 @@
         public void setId(String id)
         {
             this.id = id;
-        }
-
-        public String getNombre()
-        {
-            return nombre;
-        }
-
-        public void setNombre(String nombre)
-        {
-            this.nombre = nombre;
         }
 
         public String getDescripcion()
@@ -57,6 +49,26 @@
         public void setEstado(String estado)
         {
             this.estado = estado;
+        }
+
+        public String getUsuarioRegistro()
+        {
+            return usuarioRegistro;
+        }
+
+        public void setUsuarioRegistro(String usuarioRegistro)
+        {
+            this.usuarioRegistro = usuarioRegistro;
+        }
+
+        public String getFechaRegistro()
+        {
+            return fechaRegistro;
+        }
+
+        public void setFechaRegistro(String fechaRegistro)
+        {
+            this.fechaRegistro = fechaRegistro;
         }
 
     }

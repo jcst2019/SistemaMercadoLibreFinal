@@ -36,9 +36,13 @@
     </div>
 
 }
-<br />
+<!--
+<div class='alert alert-success alert-dismissible fade show' role='alert'>
+      <strong>Bienvenido al Sistema @HttpContext.Session.GetString("NOMBRE_USUARIO")</strong>
+       <button type='button' class='btn-close' data-bs-dismiss='alert' arial-label='Close'></button>
+</div>
+-->
 <h2>Categoria</h2>
-
 <ol class="breadcrumb mb-4 mt-4">
     <li class="breadcrumb-item"><a href="index.html">Mantenimiento</a></li>
     <li class="breadcrumb-item active">Categoria</li>
@@ -60,6 +64,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Descripción</th>
+                    <th>Fecha Registro</th>
                     <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
@@ -71,6 +76,7 @@
                     <tr>
                         <td>@categoria.getId()</td>
                         <td>@categoria.getDescripcion()</td>
+                        <td>@categoria.getFechaRegistro()</td>
                         <!--<td  class="ocultar" >@categoria.getEstado()</td>-->
                         <td>
                             @if (@categoria.getEstado() == "Activo")
@@ -174,11 +180,12 @@
 
     var tablaData = $("#tablaCategoria").DataTable({
             responsive: true,
-            ordering: false,
+            ordering: true,
+            dom: 'Bfrtip',
             "language": {
                 url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
             },
-            "buttons": [
+            buttons: [
                 'copy',
                 'print',
                 'excel'
@@ -194,7 +201,7 @@
                 $('#cboActivo').prop('disabled',false);//Si Estaba Desactivado. Lo activo
                 $('#txtID').val(json[0]);
                 $('#txtDescripcion').val(json[1]);              
-                $('#cboActivo').val(json[2].search("Activo") != -1 ? 1 : 0);
+                $('#cboActivo').val(json[3].search("Activo") != -1 ? 1 : 0);
             } else {
                 $('#lblCategoria').text("REGISTRAR CATEGORÍA");
                 $('#txtID').val("");
@@ -214,7 +221,7 @@
                 $('#txtIdBaja').prop('readonly',true);
                 $('#txtDescripcionBaja').val(json[1]);
                 $('#txtDescripcionBaja').prop('readonly',true);
-                $('#cboActivoBaja').val(json[2].search("Activo") != -1 ? 1 : 0);
+                $('#cboActivoBaja').val(json[3].search("Activo") != -1 ? 1 : 0);
                 $('#cboActivoBaja').prop('disabled',true);
             } 
 

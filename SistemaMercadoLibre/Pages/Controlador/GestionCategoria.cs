@@ -24,9 +24,10 @@ namespace SistemaMercadoLibre.Pages.Controlador
                 while (dr.Read())
                 {
                     Categoria cat = new Categoria();
-                    cat.setId(dr["IdCategoria"].ToString());  //Comentario es la columna del la base de datos
-                    cat.setDescripcion(dr["Descripcion"].ToString());
+                    cat.setId(dr["idCategoria"].ToString());  //Comentario es la columna del la base de datos
+                    cat.setDescripcion(dr["descripcion"].ToString());
                     cat.setEstado(dr["desEstado"].ToString());
+                    cat.setFechaRegistro(dr["fechaRegistro"].ToString());
 
                     lista.Add(cat);
                 }
@@ -84,11 +85,12 @@ namespace SistemaMercadoLibre.Pages.Controlador
                 cmd.CommandText = cadena;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(new SqlParameter("@descripcion", categoria.getDescripcion()));
+                cmd.Parameters.Add(new SqlParameter("@usuarioRegistro", categoria.getUsuarioRegistro()));
                 cmd.Parameters.Add("@IdCadena", SqlDbType.Char, 5).Direction = ParameterDirection.Output;
 
                 cmd.ExecuteNonQuery();
 
-                string ICategoria = cmd.Parameters["@IdCadena"].Value.ToString();
+                string ICategoria = cmd.Parameters["@idCadena"].Value.ToString();
 
                 return ICategoria;
 
