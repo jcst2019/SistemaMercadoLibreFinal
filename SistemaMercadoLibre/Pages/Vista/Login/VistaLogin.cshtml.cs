@@ -23,5 +23,6 @@ namespace SistemaMercadoLibre.Pages.Vista.Login
             return RedirectToPage("/Vista/Inicio/Inicio");
 
         }
+
     }
 }
