@@ -1,0 +1,115 @@
+﻿@page
+@model SistemaMercadoLibre.Pages.Vista.Recepcionista.VistaAsistenteRecepcionModel
+@{
+}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mb-3 mt-5">
+                <h4 class="text-center">Emitir comprobante</h4>
+            </div>
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <th class="text-center active">N° Orden pedido</th>
+                            <th class="text-center active">Fecha modificación</th>
+                            <th class="text-center active">Comprobante</th>
+                            <th class="text-center active">Estado</th>
+                            <th class="text-center active">Acción</th>
+                        </thead>
+                        <tbody>
+                            @{
+                            @if(Model.lstRecepcion!=null){
+                            @foreach (var recepcion in Model.lstRecepcion)
+                                {
+                                            <tr>
+                                                <td class="text-center">@recepcion.NroOrden</td>
+                                                <td class="text-center">@recepcion.FechaRegistro</td>
+                                                <td class="text-center">@recepcion.NumComprobante</td>
+                                                <td class="text-center">
+                                                @{
+                                                    @switch(recepcion.Estado){
+                                                        case 1: <span class="badge bg-success">Recepcionado</span>
+                                                        break;
+                                                        case 2: <span class="badge bg-warning">Por enviar</span>
+                                                        break;
+                                                    }
+                                                }
+                                                </td>
+                                                <td class="text-center">
+                                                    @{
+                                                        @switch(recepcion.Estado){
+                                                        case 1: <button type="button" class="btn btn-outline-success btn-sm" onclick="setValues(@recepcion.IdRecepcion,'emitir', @recepcion.NroOrden)"><i class="fa-solid fa-gears"></i> Emitir comprobante</button>
+                                                        break;
+                                                        case 2: <button type="button" class="btn btn-outline-primary btn-sm" onclick="setValues(@recepcion.IdRecepcion,'enviar auditar',@recepcion.NroOrden)"><i class="fa-solid fa-gears"></i> Enviar auditar</button>
+                                                        break;
+                                                        }
+                                                    }
+                                                </td>
+                                            </tr>
+                                }
+                            }
+                                
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="confirmacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="POST">
+                    <input type="hidden" id="idRecepcion"/>
+                    <input type="hidden" id="estado"/>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h6>¿Esta seguro de <span id="tipo"></span> para el pedido N° <span id="nroOrden"></span>?</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal" asp-page-handler="Aceptar">Aceptar</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var tablaData = $("#tblRecepcion").DataTable({
+            responsive: true,
+            ordering: true,
+            dom: 'Bfrtip',
+            "language": {
+                url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
+            },
+            buttons: [
+                'copy',
+                'print',
+                'excel'
+            ]
+        });
+
+        function setValues(idRecepcion, tipo, nroOrden) {
+            $("#idRecepcion").val(idRecepcion);
+            if (tipo == "emitir") {
+                $("#estado").val(3);
+                $("#tipo").val("emitir comprobante");
+            } else {
+                $("#estado").val(4);
+                $("#tipo").val("enviar auditar producto");
+            }
+            $("#nroOrden").val(nroOrden);
+        }
+    </script>

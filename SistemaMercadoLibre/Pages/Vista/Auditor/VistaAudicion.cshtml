@@ -1,0 +1,145 @@
+﻿@page
+@model SistemaMercadoLibre.Pages.Vista.Auditor.VistaAudicionModel
+@{
+}
+
+<div class="container">
+        <div class="row">
+            <div class="col-md-12 mb-3 mt-5">
+                <h4 class="text-center">Auditar productos</h4>
+            </div>
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <th class="text-center active">N° Orden pedido</th>
+                            <th class="text-center active">Fecha modificación</th>
+                            <th class="text-center active">Comprobante</th>
+                            <th class="text-center active">Estado</th>
+                            <th class="text-center active">Acción</th>
+                        </thead>
+                        <tbody>
+                        @{
+                            @if(Model.lstAudicion!=null)
+                            {
+                            @foreach(var audicion in Model.lstAudicion)
+                                {
+                                        <tr>
+                                            <td class="text-center">@audicion.NroOrden</td>
+                                            <td class="text-center">@audicion.FechamodificacionAudicion</td>
+                                            <td class="text-center"><a href="#" data-bs-toggle="modal"
+                                                    data-bs-target="#comprobante">Ver comprobante</a></td>
+                                            <td class="text-center">
+                                            @{
+                                                    @switch(audicion.Estado){
+                                                case 1: <span class="badge bg-light text-dark">En revisión</span>
+                                                break;
+                                                case 2: <span class="badge bg-success">Recibido</span>
+                                                break;
+                                            }
+                                            }
+                                            </td>
+                                            <td class="text-center">
+                                            @{
+                                                    @switch(audicion.Estado){
+                                                case 1: 
+                                                        <button type="button" class="btn btn-outline-success btn-sm"><i
+                                                                class="fa-solid fa-check " onclick="setValues('aceptar',@audicion.IdAuditoria)"></i> Aceptar</button>
+                                                        <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal"
+                                                            data-bs-target="#rechazar" onclick="setValues('rechazar',@audicion.IdAuditoria)"><i class="fa-solid fa-xmark"></i> Rechazar</button>
+                                                break;
+                                                case 2: 
+                                                        <button type="button" class="btn btn-outline-success btn-sm"><i
+                                                            class="fa-solid fa-paper-plane" onclick="setValues('enviar almacen',@audicion.IdAuditoria)"></i> Enviar almacen</button>
+                                                break;
+                                            }
+                                            }
+                                            </td>
+                                        </tr>
+                                
+                                }
+                            }   
+                            }
+                           
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="comprobante" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Comprobante N° 000254522</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <label class="fw-bold col-md-5">N° Orden pedido</label>
+                                    <label for="" class=" col-md-7">000157875454</label>
+                                </div>  
+                                <div class="row">
+                                    <label class="fw-bold col-md-5">Estado</label>
+                                    <label for="" class=" col-md-7"><span class="badge bg-success">Emitido</span></label>
+                                </div>
+                                <div class="row">
+                                    <label class="fw-bold col-md-5">Fecha de modificación</label>
+                                    <label for="" class=" col-md-7">02/07/2022 10:50:23 A.M.</label>
+                                </div>
+                                <div class="row">
+                                    <label class="fw-bold col-md-5">Observación</label>
+                                    <label for="" class=" col-md-7">Ninguna</label>
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="confirmacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="POST">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input id="idAudicion" name="idAudicion"/>
+                        <input id="estado" name="estado"/>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h6>¿Está seguro de <span id="tipo"></span> el producto del para el pedido N° <span id="nroOrden"></span>?</h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="">Detalle audicion</label>
+                                <textarea id="detalleAudicion" name="detalleAudicion" class="form-control" name="" id="" cols="30" rows="10"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        function setValues(tipo, id) {
+
+        }
+    </script>
