@@ -61,10 +61,7 @@
                             @if (@dto.getEstadoProducto() == Model.ALMACENADO)
                             {
                                 <span class='badge bg-success'>ALMACENADO</span>
-                            }
-                            else{
-                                <span class='badge bg-danger'>De Baja</span>
-                             }                                                        
+                            }                                                        
                         </td>
                         <td> <a class="btn btn-light"  href="https://www.mercadolibre.com.pe/">Ver Detalle</a></td>                       
                         <td class="text-center">
@@ -120,43 +117,6 @@
     </div>
 </form>
 
-<!-- Modal Eliminar -->
-<form method="post">
-    <div class="modal fade" id="FrmModalCategoriaBaja" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-sistema text-black">
-                    <h5 class="breadcrumb-item" id="exampleModalLabel">BAJA DE CATEGORÍA</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-1">
-                        <label for="exampleFormControlInput1" class="form-label">ID</label>
-                        <input type="text" class="form-control" id="txtIdBaja" name="txtIdBaja" readonly="readonly" >
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-1">
-                        <label for="exampleFormControlInput1" class="form-label">Descripción</label>
-                        <input type="text" class="form-control" id="txtDescripcionBaja" name="txtDescripcionBaja" placeholder="Escribir Descripción">
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <label for="exampleFormControlInput1" class="form-label">Estado</label>
-                    <select id="cboActivoBaja" name="cboActivoBaja" class="form-select">
-                        <option value="1" selected >Activo</option>
-                        <option value="0">De Baja</option>
-                    </select>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary" onclick="Guardar()" asp-page-handler="Baja">BAJA</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-
 @section scripts{
     <script>
     $(document).ready(function(){
@@ -177,28 +137,6 @@
                 'excel'
             ]
         });
-
-        function abrirModalDetalle(json) {
-
-            if (json != null) {
-                $('#lblCategoria').text("EDITAR CATEGORÍA");
-                $('#txtID').prop('readonly',true);
-                $('#txtDescripcion').prop('readonly',false);//Si Estaba Desactivado. Lo activo
-                $('#cboActivo').prop('disabled',false);//Si Estaba Desactivado. Lo activo
-                $('#txtID').val(json[0]);
-                $('#txtDescripcion').val(json[1]);              
-                $('#cboActivo').val(json[3].search("Activo") != -1 ? 1 : 0);
-            } else {
-                $('#lblCategoria').text("REGISTRAR CATEGORÍA");
-                $('#txtID').val("");
-                $('#txtDescripcion').val("");
-                $('#txtID').prop('readonly',true);
-                $('#cboActivo').prop('disabled',true);
-            }
-
-            $("#FrmModalCategoria").modal("show");
-
-        }
         
         function abrirModalRecolectado(json) {
 
@@ -220,9 +158,6 @@
             abrirModalRecolectado(data);
         })
 
-        function Guardar() {
-            
-        }
     </script>
 
 }

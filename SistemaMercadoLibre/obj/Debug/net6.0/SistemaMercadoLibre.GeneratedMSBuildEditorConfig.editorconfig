@@ -31,12 +31,28 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/JCST/maestria/cursos/CalidadSoftware/prueba/SistemaMercadoLibreFinal/SistemaMercadoLibre/Pages/Vista/Autorizar/AutorizarJefeAlmacen.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzdGFcQXV0b3JpemFyXEF1dG9yaXphckplZmVBbG1hY2VuLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JCST/maestria/cursos/CalidadSoftware/prueba/SistemaMercadoLibreFinal/SistemaMercadoLibre/Pages/Vista/Autorizar/EnviarJefeAlmacen.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzdGFcQXV0b3JpemFyXEVudmlhckplZmVBbG1hY2VuLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/JCST/maestria/cursos/CalidadSoftware/prueba/SistemaMercadoLibreFinal/SistemaMercadoLibre/Pages/Vista/Categorias/CrearCategoria.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzdGFcQ2F0ZWdvcmlhc1xDcmVhckNhdGVnb3JpYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/JCST/maestria/cursos/CalidadSoftware/prueba/SistemaMercadoLibreFinal/SistemaMercadoLibre/Pages/Vista/Categorias/VistaCategoria.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzdGFcQ2F0ZWdvcmlhc1xWaXN0YUNhdGVnb3JpYS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JCST/maestria/cursos/CalidadSoftware/prueba/SistemaMercadoLibreFinal/SistemaMercadoLibre/Pages/Vista/Confirmar/ConfirmarDespacho.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzdGFcQ29uZmlybWFyXENvbmZpcm1hckRlc3BhY2hvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JCST/maestria/cursos/CalidadSoftware/prueba/SistemaMercadoLibreFinal/SistemaMercadoLibre/Pages/Vista/Confirmar/ConfirmarEmpaque.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzdGFcQ29uZmlybWFyXENvbmZpcm1hckVtcGFxdWUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/JCST/maestria/cursos/CalidadSoftware/prueba/SistemaMercadoLibreFinal/SistemaMercadoLibre/Pages/Vista/Guias/DescargarGuias.cshtml]

@@ -1,0 +1,163 @@
+﻿@page
+@model SistemaMercadoLibre.Pages.Vista.Autorizar.EnviarJefeAlmacenModel
+@{
+}
+@if (Model.errorMessage.Length > 0)
+ {
+    <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+          <strong>@Model.errorMessage</strong>
+          <button type='button' class='btn-close' data-bs-dismiss='alert' arial-label='Close'></button>
+    </div>
+
+}
+@if (Model.successMessage.Length > 0)
+ {
+    <div class='alert alert-success alert-dismissible fade show' role='alert'>
+          <strong>@Model.successMessage</strong>
+          <button type='button' class='btn-close' data-bs-dismiss='alert' arial-label='Close'></button>
+    </div>
+
+}
+<h2>Enviar Jefe Almacén</h2>
+<ol class="breadcrumb mb-4 mt-4">
+    <li class="breadcrumb-item"><a href="index.html">Reportes</a></li>
+    <li class="breadcrumb-item active">Enviar Jefe Almacén</li>
+</ol>
+
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>Enviar Jefe Almacén
+    </div>
+    <div class="card-body">
+        <hr />
+        <table id="tablaProductosAlmacenados" class="display cell-boder" style=" width: 100%">
+            <thead>
+                <tr>
+                    <th>ID Venta</th>
+                    <th>Id Cliente</th>
+                    <th>Cliente</th>
+                    <th>Id Producto</th>
+                    <th>Producto</th>
+                    <th>Fecha Venta</th>
+                    <th>Fecha Estado</th>
+                    <th>Estado</th>
+                    <th>Detalle</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach(var dto in Model.lista)
+                {
+                    <tr>
+                        <td>@dto.getIdVenta()</td>
+                        <td>@dto.getIdCliente()</td>
+                        <td>@dto.getDatosCliente()</td>
+                        <td>@dto.getIdProducto()</td>
+                        <td>@dto.getDescripcionProducto()</td>
+                        <td>@dto.getFechaVenta()</td>
+                        <td>@dto.getFechaEstado()</td>
+                        <td>
+                            @if (@dto.getEstadoProducto() == Model.RECOLECTADO)
+                            {
+                                <span class='badge bg-primary'>RECOLECTADO</span>
+                            }                                                        
+                        </td>
+                        <td> <a class="btn btn-light"  href="https://www.mercadolibre.com.pe/">Ver Detalle</a></td>                       
+                        <td class="text-center">
+                               <button type="button" class="btn btn btn-primary btn-recolectar"><i class="fa-solid fa-gears"></i> Enviar Autorizar</button>
+                        </td>
+                    </tr>
+                    
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal Cambiar Estado Recolectado -->
+<form method="post">
+    <div class="modal fade" id="FrmModalRecolectado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-sistema text-black">
+                    <h5 class="breadcrumb-item" id="lblCategoria" name="lblCategoria">MARCAR RECOLECTADO</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-1">
+                        <label for="exampleFormControlInput1" class="form-label">ID Venta</label>
+                        <input type="text" class="form-control" id="txtIdVenta" name="txtIdVenta" readonly="readonly" >
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-1">
+                        <label for="exampleFormControlInput1" class="form-label">Cliente</label>
+                        <input type="text" class="form-control" id="txtDatosCliente" name="txtDatosCliente" readonly="readonly">
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-1">
+                        <label for="exampleFormControlInput1" class="form-label">ID Producto</label>
+                        <input type="text" class="form-control" id="txtIdProducto" name="txtIdProducto" readonly="readonly">
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-1">
+                        <label for="exampleFormControlInput1" class="form-label">Descripción Producto</label>
+                        <input type="text" class="form-control" id="txtDesProducto" name="txtDesProducto" readonly="readonly">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" onclick="Guardar()" asp-page-handler="Recolectar">Enviar Autorizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section scripts{
+    <script>
+    $(document).ready(function(){
+            //$(".ocultar").hide();
+    });
+
+    var tablaData = $("#tablaProductosAlmacenados").DataTable({
+            responsive: true,
+            ordering: true,
+            dom: 'Bfrtip',
+            "language": {
+                url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
+            },
+            buttons: [
+                'selectAll',
+                'selectNone',
+                'excel'
+            ]
+        });
+        
+        function abrirModalRecolectado(json) {
+
+            if (json != null) {
+                $('#txtIdVenta').val(json[0]);
+                $('#txtDatosCliente').val(json[2]);
+                $('#txtIdProducto').val(json[3]);
+                $('#txtDesProducto').val(json[4]);
+            } 
+
+            $("#FrmModalRecolectado").modal("show");
+
+        }
+        $("#tablaProductosAlmacenados tbody").on("click",'.btn-recolectar',function(){
+	       
+            var filaSeleccionada = $(this).closest("tr");
+            console.log(tablaData.row(filaSeleccionada).data());
+            var data = tablaData.row(filaSeleccionada).data();
+            abrirModalRecolectado(data);
+        })
+
+    </script>
+
+}
+

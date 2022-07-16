@@ -10,8 +10,8 @@ namespace SistemaMercadoLibre.Pages.Vista.Guias
         public List<DtoGuiasPendientes> lista = new List<DtoGuiasPendientes>();
         public String errorMessage = "";
         public String successMessage = "";
-        public int ALMACENADO = 8; //Constante Almacenado
-        public int RECOLECTADO = 9; //Constante Recolectado
+        public int ALMACENADO = 9; //Constante Almacenado
+        public int RECOLECTADO = 10; //Constante Recolectado
         public void OnGet()
         {
             
@@ -24,8 +24,9 @@ namespace SistemaMercadoLibre.Pages.Vista.Guias
             DtoGuiasPendientes dto = new DtoGuiasPendientes();
             dto.setIdProducto(Request.Form["txtIdProducto"].ToString());
             dto.setEstadoProducto(RECOLECTADO);
-            //Modificar
+            //Modificar a Estado RECOLECTADO(10)
             String err = GestionGuiasPendientes.ActualizarEstadoProducto(dto);
+            //ListarEstado ALMACENADO(9)
             dto.setEstadoProducto(ALMACENADO);
             lista = GestionGuiasPendientes.ListarGuiasPendientes(dto);
 
