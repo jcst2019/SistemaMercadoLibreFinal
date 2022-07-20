@@ -26,6 +26,7 @@ namespace SistemaMercadoLibre.Pages.Vista.Auditor
 
             string respuesta = GestionarAuditoria.aceptarRechazarProductoAuditor(conn, audicion);
             Console.WriteLine("respuesta --> " + respuesta.ToString());
+            lstAudicion = GestionarAuditoria.obtenerListAudicion(conn);
         }
     }
 }

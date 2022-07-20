@@ -11,7 +11,7 @@ namespace SistemaMercadoLibre.Pages.Controlador
         {
             try
             {
-                String cadenaConexxion = "Data Source = LAPTOP-O8BUEG82; Initial Catalog = BdMercadoLibre; User ID = sa; Password = admin2021";
+                String cadenaConexxion = "Data Source=DESKTOP-5335S7C\\SQLEXPRESS;Initial Catalog=db_mercado_libre;Integrated Security=True";
                 conn = new SqlConnection(cadenaConexxion);
                 conn.ConnectionString = cadenaConexxion;
                 conn.Open();

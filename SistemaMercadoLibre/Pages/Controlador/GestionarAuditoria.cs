@@ -18,7 +18,7 @@ namespace SistemaMercadoLibre.Pages.Controlador
             {
                 cmd = conn.CreateCommand();
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "spObtenerListaAsistenteRecepcionista";
+                cmd.CommandText = "spObtenerListaAuditor";
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.HasRows)
                 {
@@ -30,8 +30,10 @@ namespace SistemaMercadoLibre.Pages.Controlador
                         audicion.IdVenta = Int32.Parse(reader["idVenta"].ToString());
                         audicion.Fechaventa = DateTime.Parse(reader["fechaventa"].ToString());
                         audicion.FechamodificacionAudicion = DateTime.Parse(reader["fechamodificacionAudicion"].ToString());
+                        audicion.FechamodificacionRecepcion = DateTime.Parse(reader["fechamodificacionRecepcion"].ToString());                        
                         audicion.Observacion = reader["observacion"].ToString();
                         audicion.NroOrden = reader["nroOrden"].ToString();
+                        audicion.EstadoRecepcion = Int32.Parse(reader["estadoRecepcion"].ToString());
                         audicion.Estado = Int32.Parse(reader["estado"].ToString());
 
                         auditorList.Add(audicion);

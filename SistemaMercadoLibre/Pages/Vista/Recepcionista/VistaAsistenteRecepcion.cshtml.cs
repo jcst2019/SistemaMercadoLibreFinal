@@ -21,11 +21,12 @@ namespace SistemaMercadoLibre.Pages.Vista.Recepcionista
         public void OnPostAceptar()
         {
             Recepcion recepcion = new Recepcion();
-            recepcion.IdVenta = Int32.Parse(Request.Form["idRecepcion"]);
+            recepcion.IdRecepcion = Int32.Parse(Request.Form["idRecepcion"]);
             recepcion.Estado = Int32.Parse(Request.Form["estado"]);
 
             string respuesta = GestionaRecepcion.actualizarRecepcion(conn, recepcion);
             Console.WriteLine("respuesta --> " + respuesta.ToString());
+            lstRecepcion = GestionaRecepcion.RecepcionadosPorGenerarComprobante(conn);
         }
     }
 }

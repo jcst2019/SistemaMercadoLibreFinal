@@ -1,0 +1,238 @@
+﻿@page "/View/recepcionlista"
+@model TrabajoCalidad.Pages.Vista.Recepcionista.ViewRecepcionModel
+@using SistemaMercadoLibre.Pages.Modelo;
+@using SistemaMercadoLibre.Pages.Controlador;
+@using System.Data.SqlClient
+@{
+    SqlConnection conn =GestionDatos.conectar();
+    var subtotal=0;
+    var igv = 0.0;
+    var total = 0.0;
+
+    /*
+    if (Request.Method == "POST")
+    {
+        int idVenta = Int32.Parse(Request.Form["idVenta"]);
+        int estado = Int32.Parse(Request.Form["estado"]);
+        string observacion = Request.Form["observacion"];
+
+        Venta venta = new Venta();
+        venta.IdVenta = Int32.Parse(Request.Form["idVenta"]);
+        venta.Estado = Int32.Parse(Request.Form["estado"]);
+
+        int idUsuario = 1;
+        string respuesta = GestionaRecepcion.actualizarEstado(conn, venta,observacion, idUsuario);
+
+    }
+    */
+
+
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-12 mb-3 mt-5">
+                                                <h4 class="text-center">Recepción de productos </h4>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="table-responsive">
+                                                    <table id="tblRecepcion" class="table table-hover">
+                                                        <thead>
+                                                            <th class="text-center active">N° Orden pedido</th>
+                                                            <th class="text-center active">Fecha registro</th>
+                                                            <th class="text-center active">Detalle</th>
+                                                            <th class="text-center active">Estado pedido</th>
+                                                            <th class="text-center active">Acción</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            @{
+                                                            @if(Model.lstVenta!=null)
+                                {
+                                @foreach(var recepcion in Model.lstVenta)
+                                                            {
+                                                                            <tr>
+                                                                                <td class="text-center">@recepcion.NroOrden</td>
+                                                                                <td class="text-center">@recepcion.FechaRegistro</td>
+                                                                                <td class="text-center">
+                                                                                    <!--<a href="#" data-bs-toggle="modal" data-bs-target="#verDetalle" >Ver detalle</a>-->
+                                                                                    <form asp-page-handler="VerDetalle" method="post">
+                                                                                        <input type="hidden" name="idVentaDetalle" id="idVentaDetalle" value="@recepcion.IdVenta">
+                                                                                        <button type="button" class="btn btn-outline-default btn-sm" data-bs-toggle="modal" data-bs-target="#verDetalle" > Ver detalle</button>
+                                                                                        <!-- <button class="btn btn-default">Edit</button> -->
+                                                                                    </form>
+                                                                                 </td>
+                                                                                <td class="text-center">
+                                                                                @{
+                                                                                        @switch(recepcion.Estado){
+                                                                                case 1: <span class="badge bg-light text-dark">En revisión</span>
+                                                                                break;
+                                                                            }
+                                                                                }
+                                                                                </td>
+                                                                                <td class="text-center">
+                                                                                    <button type="button" class="btn btn-outline-success btn-sm" onclick="changeTipo('recibir','@recepcion.NroOrden',@recepcion.IdVenta)"><i class="fa-solid fa-check"></i> Recibir</button>
+                                                                                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="changeTipo('rechazar','@recepcion.NroOrden',@recepcion.IdVenta)"><i class="fa-solid fa-xmark"></i> Rechazar</button>
+                                                                                </td>
+                                                                            </tr>
+                                                            }
+                                                        }
+                                }
+                                                    </tbody>
+                                                </table>
+                                                                            
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="verDetalle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Detalle pedido N° 00001</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                    @{
+                                        <form method="POST">
+                                            <input type="text" id="idVenta2" name="idVenta" onchange="change()">
+                                        </form>
+                                        Venta venta = Model.detalleVenta;
+                                        /*new Venta();
+                                        if (Request.Method == "POST")
+                                        {
+                                            int idVenta = Int32.Parse(Request.Form["idVenta2"]);
+                                            venta = GestionaRecepcion.solicitarDatosVenta(conn, idVenta);
+                                        } 
+                                        */
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <label class="fw-bold col-md-5">N° pedido</label>
+                                                    <label for="" class=" col-md-7">@venta.NroOrden</label>
+                                                </div>  
+                                                <div class="row">
+                                                    <label class="fw-bold col-md-5">Proveedor</label>
+                                                    <label for="" class=" col-md-7">@venta.NombreProveedor</label>
+                                                </div>
+                                                <div class="row">
+                                                    <label class="fw-bold col-md-5">Fecha de registro</label>
+                                                    <label for="" class=" col-md-7">@venta.FechaRegistro</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 mt-2 mb-2">
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <th class="text-center table-active">Cant.</th>
+                                                            <th class="text-center table-active">Cod. producto</th>
+                                                            <th class="text-center table-active">Descripción</th>
+                                                            <th class="text-center table-active">Precio unt</th>
+                                                            <th class="text-center table-active">Subtotal</th>
+                                                        </thead>
+                                                        <tbody>                                           
+                                                            <tr>
+                                                                <td class="text-center">@venta.Cantidad</td>
+                                                                <td class="text-center">@venta.</td>
+                                                                <td class="text-center">@venta.NombreProducto</td>
+                                                                <td class="text-end">S/ @venta.Precio</td>
+                                                                <td class="text-end">S/ @venta.Subtotal</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="4" class="fw-bold text-end ">Subtotal</td>
+                                                                <td class="text-end">S/ @venta.Subtotal</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="4" class="fw-bold text-end ">IGV</td>
+                                                                <td class="text-end">S/ @venta.Igv</td>
+                                                            </tr>
+                                                            @{
+                                                        total = venta.Subtotal + venta.Igv;
+                                                                    <tr>
+                                                                    <td colspan="4" class="fw-bold text-end ">Total</td>
+                                                                    <td class="text-end">S/ @total</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                    }
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="confirmacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form method="POST">
+                                <input type="hidden" id="idVenta" name="idVenta" onchange="change()">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" id="estado" name="estado">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h6>¿Esta seguro de <span id="accion"></span> el producto para el pedido N° <span id="nroComprobante"></span>?</h6>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="">Observación</label>
+                                            <textarea class="form-control" name="observacion" id="observacion" cols="30" rows="10"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal" asp-page-handler="Aceptar">Aceptar</button>
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    var tablaData = $("#tblRecepcion").DataTable({
+                        responsive: true,
+                        ordering: true,
+                        dom: 'Bfrtip',
+                        "language": {
+                            url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
+                        },
+                        buttons: [
+                            'copy',
+                            'print',
+                            'excel'
+                        ]
+                    });
+                    function changeTipo(tipo,nroComprobante,idVenta) {
+                        $("#accion").empty();
+                        $("#nroComprobante").empty();
+                        $("#accion").append(tipo);
+
+                        if (tipo == "recibir") {
+                            $("#estado").val(1);
+                        } else {
+                            $("#estado").val(2);
+                        }
+
+                        $("#nroComprobante").append(nroComprobante);
+                        $("#idVenta").val(idVenta);
+                        $("#confirmacion").modal("show");
+                    }
+
+                    function verDetalleVenta(idVenta) {
+                        $("#idVenta2").val(idVenta);
+                    }
+                </script>
+}

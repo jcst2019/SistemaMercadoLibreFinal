@@ -32,7 +32,7 @@
                                                     @switch(recepcion.Estado){
                                                         case 1: <span class="badge bg-success">Recepcionado</span>
                                                         break;
-                                                        case 2: <span class="badge bg-warning">Por enviar</span>
+                                                        case 3: <span class="badge bg-warning">Por enviar</span>
                                                         break;
                                                     }
                                                 }
@@ -40,9 +40,10 @@
                                                 <td class="text-center">
                                                     @{
                                                         @switch(recepcion.Estado){
-                                                        case 1: <button type="button" class="btn btn-outline-success btn-sm" onclick="setValues(@recepcion.IdRecepcion,'emitir', @recepcion.NroOrden)"><i class="fa-solid fa-gears"></i> Emitir comprobante</button>
+                                                        case 1: 
+                                                        <button type="button" class="btn btn-outline-success btn-sm" onclick="setValues(@recepcion.IdRecepcion,'emitir', @recepcion.NroOrden)"><i class="fa-solid fa-gears"></i> Emitir comprobante</button>
                                                         break;
-                                                        case 2: <button type="button" class="btn btn-outline-primary btn-sm" onclick="setValues(@recepcion.IdRecepcion,'enviar auditar',@recepcion.NroOrden)"><i class="fa-solid fa-gears"></i> Enviar auditar</button>
+                                                        case 3: <button type="button" class="btn btn-outline-primary btn-sm" onclick="setValues(@recepcion.IdRecepcion,'enviar auditar',@recepcion.NroOrden)"><i class="fa-solid fa-paper-plane" ></i> Enviar auditar</button>
                                                         break;
                                                         }
                                                     }
@@ -64,8 +65,8 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form method="POST">
-                    <input type="hidden" id="idRecepcion"/>
-                    <input type="hidden" id="estado"/>
+                    <input type="text" id="idRecepcion" name="idRecepcion"/>
+                    <input type="text" id="estado" name="estado"/>
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -78,7 +79,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal" asp-page-handler="Aceptar">Aceptar</button>
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal" asp-page-handler="Aceptar" >Aceptar</button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                     </div>
                     </form>
@@ -103,13 +104,16 @@
 
         function setValues(idRecepcion, tipo, nroOrden) {
             $("#idRecepcion").val(idRecepcion);
+            $("#tipo").empty();
+            $("#nroOrden").empty();
             if (tipo == "emitir") {
                 $("#estado").val(3);
-                $("#tipo").val("emitir comprobante");
+                $("#tipo").append("emitir comprobante");
             } else {
                 $("#estado").val(4);
-                $("#tipo").val("enviar auditar producto");
+                $("#tipo").append("enviar auditar producto");
             }
-            $("#nroOrden").val(nroOrden);
+            $("#nroOrden").append(nroOrden);
+            $("#confirmacion").modal("show");
         }
     </script>

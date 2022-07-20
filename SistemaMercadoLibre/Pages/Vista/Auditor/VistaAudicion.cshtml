@@ -20,18 +20,17 @@
                         </thead>
                         <tbody>
                         @{
-                            @if(Model.lstAudicion!=null)
+                                @if(Model.lstAudicion!=null)
                             {
-                            @foreach(var audicion in Model.lstAudicion)
+                                    @foreach(var audicion in Model.lstAudicion)
                                 {
                                         <tr>
                                             <td class="text-center">@audicion.NroOrden</td>
                                             <td class="text-center">@audicion.FechamodificacionAudicion</td>
-                                            <td class="text-center"><a href="#" data-bs-toggle="modal"
-                                                    data-bs-target="#comprobante">Ver comprobante</a></td>
+                                            <td class="text-center"><a href="#" onclick="verComprobante('@audicion.NroOrden','@audicion.EstadoRecepcion','@audicion.FechamodificacionRecepcion','@audicion.Observacion')">Ver comprobante</a></td>
                                             <td class="text-center">
                                             @{
-                                                    @switch(audicion.Estado){
+                                                        @switch(audicion.Estado){
                                                 case 1: <span class="badge bg-light text-dark">En revisión</span>
                                                 break;
                                                 case 2: <span class="badge bg-success">Recibido</span>
@@ -42,16 +41,14 @@
                                             <td class="text-center">
                                             @{
                                                     @switch(audicion.Estado){
-                                                case 1: 
-                                                        <button type="button" class="btn btn-outline-success btn-sm"><i
-                                                                class="fa-solid fa-check " onclick="setValues('aceptar',@audicion.IdAuditoria)"></i> Aceptar</button>
-                                                        <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal"
-                                                            data-bs-target="#rechazar" onclick="setValues('rechazar',@audicion.IdAuditoria)"><i class="fa-solid fa-xmark"></i> Rechazar</button>
-                                                break;
-                                                case 2: 
-                                                        <button type="button" class="btn btn-outline-success btn-sm"><i
-                                                            class="fa-solid fa-paper-plane" onclick="setValues('enviar almacen',@audicion.IdAuditoria)"></i> Enviar almacen</button>
-                                                break;
+                                            case 1: 
+                                                        <button type="button" class="btn btn-outline-success btn-sm" onclick="setValues('@audicion.NroOrden','aceptar',@audicion.IdAuditoria)"><i class="fa-solid fa-check "></i> Aceptar</button>
+                                                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="setValues('@audicion.NroOrden','rechazar',@audicion.IdAuditoria)"><i class="fa-solid fa-xmark"></i> Rechazar</button>
+                                            break;
+                                            case 2: 
+                                                        <button type="button" class="btn btn-outline-success btn-sm" onclick="setValues('@audicion.NroOrden','enviar almacen',@audicion.IdAuditoria)"><i
+                                                            class="fa-solid fa-paper-plane" ></i> Enviar almacen</button>
+                                            break;
                                             }
                                             }
                                             </td>
@@ -59,8 +56,7 @@
                                 
                                 }
                             }   
-                            }
-                           
+                        }  
                         </tbody>
                     </table>
                 </div>
@@ -72,7 +68,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Comprobante N° 000254522</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Comprobante N° <span id="nroOrdentitle"></span></h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -80,19 +76,21 @@
                             <div class="col-md-12">
                                 <div class="row">
                                     <label class="fw-bold col-md-5">N° Orden pedido</label>
-                                    <label for="" class=" col-md-7">000157875454</label>
+                                    <label for="" class=" col-md-7"><span id="nroOrden"></span></label>
                                 </div>  
                                 <div class="row">
                                     <label class="fw-bold col-md-5">Estado</label>
-                                    <label for="" class=" col-md-7"><span class="badge bg-success">Emitido</span></label>
+                                    <label for="" class=" col-md-7">
+                                        <p id="descestado"></p>
+                                    </label>
                                 </div>
                                 <div class="row">
                                     <label class="fw-bold col-md-5">Fecha de modificación</label>
-                                    <label for="" class=" col-md-7">02/07/2022 10:50:23 A.M.</label>
+                                    <label for="" class=" col-md-7"><span id="fechaModificacionfechaModificacion"></span></label>
                                 </div>
                                 <div class="row">
                                     <label class="fw-bold col-md-5">Observación</label>
-                                    <label for="" class=" col-md-7">Ninguna</label>
+                                    <label for="" class=" col-md-7"><span id="observacion"></span></label>
                                 </div>  
                             </div>
                         </div>
@@ -114,11 +112,11 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <input id="idAudicion" name="idAudicion"/>
-                        <input id="estado" name="estado"/>
+                        <input type="hidden" id="idAudicion" name="idAudicion"/>
+                        <input type="hidden" id="estado" name="estado"/>
                         <div class="row">
                             <div class="col-md-12">
-                                <h6>¿Está seguro de <span id="tipo"></span> el producto del para el pedido N° <span id="nroOrden"></span>?</h6>
+                                <h6>¿Está seguro de <span id="tipo"></span> el producto para el pedido N° <span id="nroOrdenConfirmacion"></span>?</h6>
                             </div>
                         </div>
                         <div class="row">
@@ -129,7 +127,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal" asp-page-handler="Aceptar" >Aceptar</button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                     </div>
                     </form>
@@ -139,7 +137,36 @@
 
     </div>
     <script>
-        function setValues(tipo, id) {
+        function setValues(nroOrden, tipo, id) {
+            $("#nroOrdenConfirmacion").empty();
+            $("#tipo").empty();
+            $("#idAudicion").val(id);
 
+
+            if (tipo=="aceptar") {
+                $("#tipo").append("aceptar");
+                $("#estado").val(2);
+            }else{
+                $("#tipo").append("rechazar");
+                $("#estado").val(3);
+            }
+
+            $("#confirmacion").modal("show");
+        }
+
+        function verComprobante(nroOrden,estado,fecha, observacion) {
+            $("#nroOrden").empty();
+            $("#nroOrdentitle").empty();
+            $("#descestado").empty();
+            $("#fechaModificacionfechaModificacion").empty();
+            $("#observacion").empty();
+
+            $("#nroOrden").append(nroOrden);
+            $("#nroOrdentitle").append(nroOrden);
+            if (estado==4) $("#descestado").append("<span class=\"badge bg-success\">Emitido<span>");
+            $("#fechaModificacionfechaModificacion").append(fecha);
+            $("#observacion").append(observacion);
+
+            $("#comprobante").modal("show");
         }
     </script>

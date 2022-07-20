@@ -33,6 +33,7 @@ namespace TrabajoCalidad.Pages.Vista.Recepcionista
             int idUsuario = 1;
             string respuesta = GestionaRecepcion.actualizarEstado(conn, venta, observacion, idUsuario);
             Console.WriteLine("respuesta --> "+respuesta.ToString());
+            lstVenta = GestionaRecepcion.mostrarVentasEnTabla(conn);
         }
 
         public void OnPostVerDetalle()
@@ -40,6 +41,7 @@ namespace TrabajoCalidad.Pages.Vista.Recepcionista
             int idVenta = Int32.Parse(Request.Form["idVentaDetalle"]);
             detalleVenta = GestionaRecepcion.solicitarDatosVenta(conn, idVenta);
             Console.WriteLine("respuesta --> " + detalleVenta.ToString());
+            lstVenta = GestionaRecepcion.mostrarVentasEnTabla(conn);
 
         }
     }

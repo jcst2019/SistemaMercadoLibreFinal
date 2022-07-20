@@ -145,9 +145,10 @@ namespace SistemaMercadoLibre.Pages.Controlador
         {
             try
             {
+                cmd = conn.CreateCommand();
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "spActualizarRecepcionista";
-                cmd.Connection = conn;
+                //cmd.Connection = conn;
 
                 SqlParameter IdRecepcion = cmd.Parameters.Add("@idRecepcion", SqlDbType.Int);
                 IdRecepcion.Direction = ParameterDirection.Input;
