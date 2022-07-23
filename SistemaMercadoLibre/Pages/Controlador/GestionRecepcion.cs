@@ -156,34 +156,6 @@ namespace SistemaMercadoLibre.Pages.Controlador
 
         public static string actualizarRecepcion(SqlConnection conn, Recepcion recepcion)
         {
-            /*
-            try
-            {
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "spActualizarRecepcionista";
-                cmd.Connection = conn;
-
-                SqlParameter IdRecepcion = cmd.Parameters.Add("@idRecepcion", SqlDbType.Char);
-                IdRecepcion.Direction = ParameterDirection.Input;
-                IdRecepcion.Value = recepcion.IdRecepcion;
-
-                SqlParameter Estado = cmd.Parameters.Add("@estado", SqlDbType.Int);
-                Estado.Direction = ParameterDirection.Input;
-                Estado.Value = recepcion.Estado;
-
-                SqlParameter Usuario = cmd.Parameters.Add("@idUsuario", SqlDbType.Char);
-                Usuario.Direction = ParameterDirection.Input;
-                Usuario.Value = recepcion.IdUsuario;
-
-                cmd.ExecuteNonQuery();
-
-                return "Estado actualizado correctamente";
-            }
-            catch (Exception ex)
-            {
-                return "Ocurrió un error al actualizar estado " + ex.ToString();
-            }
-            */
 
             String cadena = "spActualizarRecepcionista";
 
@@ -199,6 +171,7 @@ namespace SistemaMercadoLibre.Pages.Controlador
                 cmd.Parameters.Add(new SqlParameter("@idRecepcion", recepcion.IdRecepcion));
                 cmd.Parameters.Add(new SqlParameter("@estado", recepcion.Estado));
                 cmd.Parameters.Add(new SqlParameter("@idUsuario", recepcion.IdUsuario));
+                cmd.Parameters.Add(new SqlParameter("@idVenta", recepcion.IdVenta));
                 cmd.ExecuteNonQuery();
 
                 return "Estado actualizado correctamente";

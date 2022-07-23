@@ -1,0 +1,184 @@
+﻿@page
+@model SistemaMercadoLibre.Pages.Vista.Almacenista.VistaAlmacenistaModel
+@{
+}
+<h2>Almacenar Productos</h2>
+        <ol class="breadcrumb mb-4 mt-4">
+    <li class="breadcrumb-item"><a href="index.html">Almacenar Productos</a></li>
+    <li class="breadcrumb-item active">Almacenar Productos</li>
+        </ol>
+    <div class="card">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>Almacenar Productos
+        </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-hover" id="tblAuditor">
+                        <thead>
+                            <th class="text-center active">N° Orden pedido</th>
+                            <th class="text-center active">Fecha modificación</th>
+                            <th class="text-center active">Comprobante</th>
+                            <th class="text-center active">Estado</th>
+                            <th class="text-center active">Acción</th>
+                        </thead>
+                        <tbody>
+                        @{
+                                        @if(Model.lstAudicion!=null)
+                            {
+                                            @foreach(var audicion in Model.lstAudicion)
+                                {
+                                                <tr>
+                                                    <td class="text-center">@audicion.NroOrden</td>
+                                                    <td class="text-center">@audicion.FechamodificacionAudicion</td>
+                                                    <td class="text-center"><a href="#" onclick="verComprobante('@audicion.NroOrden','@audicion.EstadoRecepcion','@audicion.FechamodificacionRecepcion','@audicion.Observacion')">Ver comprobante</a></td>
+                                                    <td class="text-center">
+                                                    @{
+                                                                        @switch(audicion.Estado){
+                                                        case 3: 
+                                                            <span class="badge bg-success">Entregado Almacén</span>
+                                                             break;
+                                                break;
+                                            }
+                                                    }
+                                                    </td>
+                                                    <td class="text-center">
+                                                    @{
+                                                                    @switch(audicion.Estado){
+                                            case 3: 
+                                                                        <button type="button" class="btn btn-outline-success btn-sm" onclick="setValues('@audicion.NroOrden','aceptar','@audicion.IdAuditoria','@audicion.IdVenta')"><i
+                                                                            class="fa-solid fa-paper-plane" ></i>Ingresar  almacen</button>
+                                            break;
+                                            }
+                                                    }
+                                                    </td>
+                                                </tr>
+                                
+                                }
+                            }   
+                        }  
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="comprobante" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Comprobante N° <span id="nroOrdentitle"></span></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <label class="fw-bold col-md-5">N° Orden pedido</label>
+                                    <label for="" class=" col-md-7"><span id="nroOrden"></span></label>
+                                </div>  
+                                <div class="row">
+                                    <label class="fw-bold col-md-5">Estado</label>
+                                    <label for="" class=" col-md-7">
+                                        <p id="descestado"></p>
+                                    </label>
+                                </div>
+                                <div class="row">
+                                    <label class="fw-bold col-md-5">Fecha de modificación</label>
+                                    <label for="" class=" col-md-7"><span id="fechaModificacionfechaModificacion"></span></label>
+                                </div>
+                                <div class="row">
+                                    <label class="fw-bold col-md-5">Observación</label>
+                                    <label for="" class=" col-md-7"><span id="observacion"></span></label>
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="confirmacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="POST">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="idAudicion" name="idAudicion"/>
+                        <input type="hidden" id="estado" name="estado"/>
+                        <input type="hidden" id="idVenta" name="idVenta"/>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h6>¿Está seguro de <span id="tipo"></span> el producto para el pedido N° <span id="nroOrdenConfirmacion"></span>?</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal" asp-page-handler="Aceptar" >Aceptar</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+ @section scripts{
+    <script>
+       var tablaData = $("#tblAuditor").DataTable({
+            responsive: true,
+            ordering: true,
+            dom: 'Bfrtip',
+            "language": {
+                url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
+            },
+            buttons: [
+                'copy',
+                'print',
+                'excel'
+            ]
+        });
+        function setValues(nroOrden, tipo, id,idVenta) {
+            $("#nroOrdenConfirmacion").empty();
+            $("#tipo").empty();
+            $("#idAudicion").val(id);
+            $("#idVenta").val(idVenta);
+
+            if (tipo=="aceptar") {
+                $("#tipo").append("aceptar");
+                $("#estado").val(2);
+            }else{
+                $("#tipo").append("rechazar");
+                $("#estado").val(3);
+            }
+
+            $("#confirmacion").modal("show");
+        }
+
+        function verComprobante(nroOrden,estado,fecha, observacion) {
+            $("#nroOrden").empty();
+            $("#nroOrdentitle").empty();
+            $("#descestado").empty();
+            $("#fechaModificacionfechaModificacion").empty();
+            $("#observacion").empty();
+
+            $("#nroOrden").append(nroOrden);
+            $("#nroOrdentitle").append(nroOrden);
+            if (estado==4) $("#descestado").append("<span class=\"badge bg-success\">Emitido<span>");
+            $("#fechaModificacionfechaModificacion").append(fecha);
+            $("#observacion").append(observacion);
+
+            $("#comprobante").modal("show");
+        }
+    </script>
+ }

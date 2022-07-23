@@ -46,9 +46,9 @@
                                                     @{
                                                         @switch(recepcion.Estado){
                                                         case 1: 
-                                                        <button type="button" class="btn btn-outline-success btn-sm" onclick="setValues('@recepcion.IdRecepcion','emitir', '@recepcion.NroOrden')"><i class="fa-solid fa-gears"></i> Emitir comprobante</button>
+                                                        <button type="button" class="btn btn-outline-success btn-sm" onclick="setValues('@recepcion.IdRecepcion','emitir', '@recepcion.NroOrden','@recepcion.IdVenta')"><i class="fa-solid fa-gears"></i> Emitir comprobante</button>
                                                         break;
-                                                        case 3: <button type="button" class="btn btn-outline-primary btn-sm" onclick="setValues('@recepcion.IdRecepcion','enviar auditar','@recepcion.NroOrden')"><i class="fa-solid fa-paper-plane" ></i> Enviar auditar</button>
+                                                        case 3: <button type="button" class="btn btn-outline-primary btn-sm" onclick="setValues('@recepcion.IdRecepcion','enviar auditar','@recepcion.NroOrden','@recepcion.IdVenta')"><i class="fa-solid fa-paper-plane" ></i> Enviar auditar</button>
                                                         break;
                                                         }
                                                     }
@@ -72,6 +72,7 @@
                 <div class="modal-content">
                     <form method="POST">
                     <input type="text" id="idRecepcion" name="idRecepcion"/>
+                     <input type="text" id="idVenta" name="idVenta"/>
                     <input type="text" id="estado" name="estado"/>
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
@@ -109,8 +110,9 @@
             ]
         });
 
-        function setValues(idRecepcion, tipo, nroOrden) {
+        function setValues(idRecepcion, tipo, nroOrden, idVenta) {
             $("#idRecepcion").val(idRecepcion);
+            $("#idVenta").val(idVenta);
             $("#tipo").empty();
             $("#nroOrden").empty();
             if (tipo == "emitir") {

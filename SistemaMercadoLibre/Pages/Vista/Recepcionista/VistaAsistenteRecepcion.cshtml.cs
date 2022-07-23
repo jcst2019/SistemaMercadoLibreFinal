@@ -23,6 +23,7 @@ namespace SistemaMercadoLibre.Pages.Vista.Recepcionista
             Recepcion recepcion = new Recepcion();
             recepcion.IdRecepcion = Request.Form["idRecepcion"];
             recepcion.Estado = Int32.Parse(Request.Form["estado"]);
+            recepcion.IdVenta = Request.Form["idVenta"];
 
             recepcion.IdUsuario = HttpContext.Session.GetString("ID_USUARIO");
             string respuesta = GestionaRecepcion.actualizarRecepcion(conn, recepcion);
