@@ -26,7 +26,7 @@ namespace SistemaMercadoLibre.Pages.Vista.Almacenista
 
             string respuesta = GestionarAlmacen.aceptarIngresoAlmacen(conn, audicion);
             Console.WriteLine("respuesta --> " + respuesta.ToString());
-
+            errorMessage = respuesta;
             //Actualizar Estado Producto
             lstAudicion = GestionarAuditoria.obtenerListAudicion(conn);
         }

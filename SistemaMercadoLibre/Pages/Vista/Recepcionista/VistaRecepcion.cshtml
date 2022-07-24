@@ -8,7 +8,23 @@
     var subtotal=0;
     var igv = 0.0;
     var total = 0.0;
+}
+@if (Model.errorMessage.Length > 0)
+ {
+    <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+          <strong>@Model.errorMessage</strong>
+          <button type='button' class='btn-close' data-bs-dismiss='alert' arial-label='Close'></button>
+    </div>
 
+}
+@if (Model.successMessage.Length > 0)
+ {
+    <div class='alert alert-success alert-dismissible fade show' role='alert'>
+          <strong>@Model.successMessage</strong>
+          <button type='button' class='btn-close' data-bs-dismiss='alert' arial-label='Close'></button>
+    </div>
+
+}
  <h2>Recepción de productos</h2>
 <ol class="breadcrumb mb-4 mt-4">
     <li class="breadcrumb-item"><a href="index.html">Registro</a></li>
@@ -37,36 +53,36 @@
                                                             </thead>
                                                             <tbody>
                                                                 @{
-                                                                    @if(Model.lstVenta!=null)
+                                                                        @if(Model.lstVenta!=null)
                                 {
-                                                                @foreach(var recepcion in Model.lstVenta)
+                                                                    @foreach(var recepcion in Model.lstVenta)
                                                             {
-                                                                                    <tr>
-                                                                                        <td class="text-center">@recepcion.NroOrden</td>
-                                                                                        <td class="text-center">@recepcion.FechaRegistro</td>
-                                                                                        <td class="text-center">
-                                                                                            <!--<a href="#" data-bs-toggle="modal" data-bs-target="#verDetalle" >Ver detalle</a>-->
-                                                                                            <form method="post">
-                                                                                                <input type="hidden" name="idVentaDetalle" id="idVentaDetalle" value="@recepcion.IdVenta">
-                                                                                                <button type="submit" class="btn btn-outline-default btn-sm"  
+                                                                                        <tr>
+                                                                                            <td class="text-center">@recepcion.NroOrden</td>
+                                                                                            <td class="text-center">@recepcion.FechaRegistro</td>
+                                                                                            <td class="text-center">
+                                                                                                <!--<a href="#" data-bs-toggle="modal" data-bs-target="#verDetalle" >Ver detalle</a>-->
+                                                                                                <form method="post">
+                                                                                                    <input type="hidden" name="idVentaDetalle" id="idVentaDetalle" value="@recepcion.IdVenta">
+                                                                                                    <button type="submit" class="btn btn-outline-default btn-sm"  
                                                                                                  onclick="verDetalleVenta('@recepcion.IdVenta')"
                                                                                                  asp-page-handler="VerDetalle"> Ver detalle</button>                                                     
-                                                                                                <!-- <button class="btn btn-default">Edit</button> -->
-                                                                                            </form>
-                                                                                         </td>
-                                                                                        <td class="text-center">
-                                                                                        @{
-                                                                                                    @switch(recepcion.Estado){
+                                                                                                    <!-- <button class="btn btn-default">Edit</button> -->
+                                                                                                </form>
+                                                                                             </td>
+                                                                                            <td class="text-center">
+                                                                                            @{
+                                                                                                            @switch(recepcion.Estado){
                                                                                 case 1: <span class="badge bg-light text-dark">En revisión</span>
                                                                                 break;
                                                                             }
-                                                                                        }
-                                                                                        </td>
-                                                                                        <td class="text-center">
-                                                                                            <button type="button" class="btn btn-outline-success btn-sm" onclick="changeTipo('recibir','@recepcion.NroOrden','@recepcion.IdVenta')"><i class="fa-solid fa-check"></i> Recibir</button>
-                                                                                            <button type="button" class="btn btn-outline-danger btn-sm" onclick="changeTipo('rechazar','@recepcion.NroOrden','@recepcion.IdVenta')"><i class="fa-solid fa-xmark"></i> Rechazar</button>
-                                                                                        </td>
-                                                                                    </tr>
+                                                                                            }
+                                                                                            </td>
+                                                                                            <td class="text-center">
+                                                                                                <button type="button" class="btn btn-outline-success btn-sm" onclick="changeTipo('recibir','@recepcion.NroOrden','@recepcion.IdVenta')"><i class="fa-solid fa-check"></i> Recibir</button>
+                                                                                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="changeTipo('rechazar','@recepcion.NroOrden','@recepcion.IdVenta')"><i class="fa-solid fa-xmark"></i> Rechazar</button>
+                                                                                            </td>
+                                                                                        </tr>
                                                             }
                                                         }
                                     }
@@ -88,9 +104,9 @@
                                         </div>
                                         <div class="modal-body">
                         @{
-                                                <form method="POST">
-                                                    <input type="text" id="idVenta2" name="idVenta" onchange="change()">
-                                                </form>
+                                                    <form method="POST">
+                                                        <input type="text" id="idVenta2" name="idVenta" onchange="change()">
+                                                    </form>
                                         Venta venta = Model.detalleVenta;
                                         /*new Venta();
                                         if (Request.Method == "POST")
@@ -100,59 +116,59 @@
                                         } 
                                         */
 
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="row">
-                                                            <label class="fw-bold col-md-5">N° pedido</label>
-                                                            <label for="" class=" col-md-7">@venta.NroOrden</label>
-                                                        </div>  
-                                                        <div class="row">
-                                                            <label class="fw-bold col-md-5">Proveedor</label>
-                                                            <label for="" class=" col-md-7">@venta.NombreProveedor</label>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <label class="fw-bold col-md-5">N° pedido</label>
+                                                                <label for="" class=" col-md-7">@venta.NroOrden</label>
+                                                            </div>  
+                                                            <div class="row">
+                                                                <label class="fw-bold col-md-5">Proveedor</label>
+                                                                <label for="" class=" col-md-7">@venta.NombreProveedor</label>
+                                                            </div>
+                                                            <div class="row">
+                                                                <label class="fw-bold col-md-5">Fecha de registro</label>
+                                                                <label for="" class=" col-md-7">@venta.FechaRegistro</label>
+                                                            </div>
                                                         </div>
-                                                        <div class="row">
-                                                            <label class="fw-bold col-md-5">Fecha de registro</label>
-                                                            <label for="" class=" col-md-7">@venta.FechaRegistro</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12 mt-2 mb-2">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-bordered">
-                                                                <thead>
-                                                                    <th class="text-center table-active">Cant.</th>
-                                                                    <th class="text-center table-active">Cod. producto</th>
-                                                                    <th class="text-center table-active">Descripción</th>
-                                                                    <th class="text-center table-active">Precio unt</th>
-                                                                    <th class="text-center table-active">Subtotal</th>
-                                                                </thead>
-                                                                <tbody>                                           
-                                                                    <tr>
-                                                                        <td class="text-center">@venta.Cantidad</td>
-                                                                        <td class="text-center">@venta.</td>
-                                                                        <td class="text-center">@venta.NombreProducto</td>
-                                                                        <td class="text-end">S/ @venta.Precio</td>
-                                                                        <td class="text-end">S/ @venta.Subtotal</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td colspan="4" class="fw-bold text-end ">Subtotal</td>
-                                                                        <td class="text-end">S/ @venta.Subtotal</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td colspan="4" class="fw-bold text-end ">IGV</td>
-                                                                        <td class="text-end">S/ @venta.Igv</td>
-                                                                    </tr>
-                                                                    @{
+                                                        <div class="col-md-12 mt-2 mb-2">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-bordered">
+                                                                    <thead>
+                                                                        <th class="text-center table-active">Cant.</th>
+                                                                        <th class="text-center table-active">Cod. producto</th>
+                                                                        <th class="text-center table-active">Descripción</th>
+                                                                        <th class="text-center table-active">Precio unt</th>
+                                                                        <th class="text-center table-active">Subtotal</th>
+                                                                    </thead>
+                                                                    <tbody>                                           
+                                                                        <tr>
+                                                                            <td class="text-center">@venta.Cantidad</td>
+                                                                            <td class="text-center">@venta.</td>
+                                                                            <td class="text-center">@venta.NombreProducto</td>
+                                                                            <td class="text-end">S/ @venta.Precio</td>
+                                                                            <td class="text-end">S/ @venta.Subtotal</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td colspan="4" class="fw-bold text-end ">Subtotal</td>
+                                                                            <td class="text-end">S/ @venta.Subtotal</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td colspan="4" class="fw-bold text-end ">IGV</td>
+                                                                            <td class="text-end">S/ @venta.Igv</td>
+                                                                        </tr>
+                                                                        @{
                                                         total = venta.Subtotal + venta.Igv;
-                                                                                <tr>
-                                                                                <td colspan="4" class="fw-bold text-end ">Total</td>
-                                                                                <td class="text-end">S/ @total</td>
-                                                                            </tr>
-                                                                    }
-                                                                </tbody>
-                                                            </table>
+                                                                                        <tr>
+                                                                                        <td colspan="4" class="fw-bold text-end ">Total</td>
+                                                                                        <td class="text-end">S/ @total</td>
+                                                                                    </tr>
+                                                                        }
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
                         }
                                         </div>
                                         <div class="modal-footer">
@@ -236,4 +252,4 @@
                         }
     </script>
     }
-}
+

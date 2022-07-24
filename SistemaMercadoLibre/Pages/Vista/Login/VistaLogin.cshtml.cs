@@ -35,11 +35,6 @@ namespace SistemaMercadoLibre.Pages.Vista.Login
                 return null;
             }
 
-            //HttpContext.Session.SetString("NOMBRE_USUARIO", "JUAN CARLOS SOLAR TORRES");
-            //HttpContext.Session.SetString("USUARIO", email);
-            //HttpContext.Session.SetString("ID_USUARIO", "U00001");
-
-            //var id = HttpContext.Session.GetString("ID_USUARIO");
 
            
 

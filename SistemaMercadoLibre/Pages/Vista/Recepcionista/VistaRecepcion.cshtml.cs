@@ -41,6 +41,7 @@ namespace SistemaMercadoLibre.Pages.Vista.Recepcionista
             string idVenta = Request.Form["idVentaDetalle"];
             detalleVenta = GestionaRecepcion.solicitarDatosVenta(conn, idVenta);
             Console.WriteLine("respuesta --> " + detalleVenta.ToString());
+            errorMessage = "Producto Recepcionado con Exito";
             lstVenta = GestionaRecepcion.mostrarVentasEnTabla(conn);
 
         }

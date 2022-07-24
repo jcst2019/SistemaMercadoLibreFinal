@@ -28,7 +28,7 @@ namespace SistemaMercadoLibre.Pages.Vista.Recepcionista
             recepcion.IdUsuario = HttpContext.Session.GetString("ID_USUARIO");
             string respuesta = GestionaRecepcion.actualizarRecepcion(conn, recepcion);
             Console.WriteLine("respuesta --> " + respuesta.ToString());
-
+            errorMessage = respuesta;
             lstRecepcion = GestionaRecepcion.RecepcionadosPorGenerarComprobante(conn, recepcion.IdUsuario);
         }
     }
